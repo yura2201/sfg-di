@@ -1,6 +1,7 @@
 package com.ytsarkov.sfgdi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import com.ytsarkov.sfgdi.service.GreetingService;
@@ -12,6 +13,7 @@ import com.ytsarkov.sfgdi.service.GreetingService;
 public class PropertyInjectedController {
 
   @Autowired
+  @Qualifier("propertyInjectedGreetingService")
   public GreetingService greetingService;
 
   public String getGreeting() {
