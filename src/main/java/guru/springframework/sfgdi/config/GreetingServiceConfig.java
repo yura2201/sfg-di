@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
 
 import com.springframework.pets.PetService;
 import com.springframework.pets.PetServiceFactory;
@@ -23,7 +22,6 @@ import com.springframework.pets.PetServiceFactory;
 /**
  * @author Yuriy Tsarkov (yurait6@gmail.com) on 14.09.2022
  */
-@PropertySource("classpath:datasource.properties")
 @ImportResource("classpath:sfgdi-config.xml")
 @Configuration
 public class GreetingServiceConfig {
