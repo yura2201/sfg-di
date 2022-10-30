@@ -1,5 +1,6 @@
 package guru.springframework.sfgdi.config;
 
+import guru.springframework.sfgdi.datasource.FakeDataSource;
 import guru.springframework.sfgdi.repository.EnglishGreetingRepository;
 import guru.springframework.sfgdi.repository.EnglishGreetingRepositoryImpl;
 import guru.springframework.sfgdi.services.I18NSpanishService;
@@ -8,11 +9,13 @@ import guru.springframework.sfgdi.services.PrimaryGreetingService;
 import guru.springframework.sfgdi.services.PropertyInjectedGreetingService;
 import guru.springframework.sfgdi.services.SetterInjectedGreetingService;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 
 import com.springframework.pets.PetService;
 import com.springframework.pets.PetServiceFactory;
@@ -20,6 +23,7 @@ import com.springframework.pets.PetServiceFactory;
 /**
  * @author Yuriy Tsarkov (yurait6@gmail.com) on 14.09.2022
  */
+@PropertySource("classpath:datasource.properties")
 @ImportResource("classpath:sfgdi-config.xml")
 @Configuration
 public class GreetingServiceConfig {
@@ -74,4 +78,15 @@ public class GreetingServiceConfig {
     return new SetterInjectedGreetingService();
   }
 
+  @Bean
+  FakeDataSource fakeDataSource(@Value("${guru.username}") String username,
+      @Value("${guru.password}") String password,
+      @Value("${guru.jdbc-url}") String jdbcUrl) {
+    FakeDataSource fakeDataSource = new FakeDataSource();
+    fakeDataSource.setUsername(username);
+    fakeDataSource.setPassword(password);
+    fakeDataSource.setJdbcUrl(jdbcUrl);
+
+    return fakeDataSource;
+  }
 }
