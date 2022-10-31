@@ -9,7 +9,7 @@ import guru.springframework.sfgdi.services.PrimaryGreetingService;
 import guru.springframework.sfgdi.services.PropertyInjectedGreetingService;
 import guru.springframework.sfgdi.services.SetterInjectedGreetingService;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
@@ -24,6 +24,7 @@ import com.springframework.pets.PetServiceFactory;
  */
 @ImportResource("classpath:sfgdi-config.xml")
 @Configuration
+@EnableConfigurationProperties(SfgConstructorConfig.class)
 public class GreetingServiceConfig {
 
   @Bean
@@ -77,13 +78,11 @@ public class GreetingServiceConfig {
   }
 
   @Bean
-  FakeDataSource fakeDataSource(@Value("${guru.username}") String username,
-      @Value("${guru.password}") String password,
-      @Value("${guru.jdbc-url}") String jdbcUrl) {
+  FakeDataSource fakeDataSource(SfgConstructorConfig sfgConstructorConfig) {
     FakeDataSource fakeDataSource = new FakeDataSource();
-    fakeDataSource.setUsername(username);
-    fakeDataSource.setPassword(password);
-    fakeDataSource.setJdbcUrl(jdbcUrl);
+    fakeDataSource.setUsername(sfgConstructorConfig.getUsername());
+    fakeDataSource.setPassword(sfgConstructorConfig.getPassword());
+    fakeDataSource.setJdbcUrl(sfgConstructorConfig.getJdbcUrl());
 
     return fakeDataSource;
   }
